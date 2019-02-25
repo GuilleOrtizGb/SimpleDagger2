@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
 
 
 //-----------My implententaion -----------//
-//        var DefaultMessage = implementation()
-//        var GuilleMEssage= implementationGuille()
+        var DefaultMessage = implementation()
+        var GuilleMEssage= implementationGuille()
 //
 //        var mData= data(GuilleMEssage)
 //        txt.setText(mData.getData())
@@ -42,8 +42,9 @@ class MainActivity : AppCompatActivity() {
 
 //
 //        DaggerMagicBox2.create().inject(this)
-//
-//        txt.setText(data.show())
+        DaggerMagicBox.create().inject2(GuilleMEssage)
+
+        //txt.setText(data.show())
 
     }
 }
@@ -52,9 +53,13 @@ class Info @Inject constructor() {
     val text = "Hello Dagger 2"
 }
 
-@Component
+@Component //where the instantiating my member variable  magic happends
 interface MagicBox {
-    fun poke(app: MainActivity)
+    //I also need to tell my magic box, it is there to perform it’s
+    // magic on MainActivity. So to do that, I create a poke function
+    // accepting MainActivity in my MagicBox.
+    fun poke(app: MainActivity)//inject()
+    fun inject2(text: Itext)
 }
 
 //-----------My Implementation------------//
