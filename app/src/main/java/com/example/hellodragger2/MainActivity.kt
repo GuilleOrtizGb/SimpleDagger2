@@ -6,6 +6,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
 import dagger.Component
+import dagger.Module
 import dagger.Provides
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -13,7 +14,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var info: Info
+    lateinit var info: Info2
 
 //    @Inject
 //    lateinit var data: Itext
@@ -24,17 +25,14 @@ class MainActivity : AppCompatActivity() {
 
         DaggerMagicBox.create().poke(this)
 
-        var kk = info.text
-        txt.setText(kk)
-
+        txt.setText(info.text)
 
 //-----------My implententaion -----------//
-        var DefaultMessage = implementation()
-        var GuilleMEssage= implementationGuille()
+//        var DefaultMessage = implementation()
+//        var GuilleMEssage= implementationGuille()
 //
 //        var mData= data(GuilleMEssage)
 //        txt.setText(mData.getData())
-
 
 
 //--------My Implementation Dagger2------------//
@@ -42,24 +40,36 @@ class MainActivity : AppCompatActivity() {
 
 //
 //        DaggerMagicBox2.create().inject(this)
-        DaggerMagicBox.create().inject2(GuilleMEssage)
+//       DaggerMagicBox.create().inject2(GuilleMEssage)
 
         //txt.setText(data.show())
-
     }
 }
 
-class Info @Inject constructor() {
-    val text = "Hello Dagger 2"
+@Module
+class Bag{
+    @Provides
+    fun sayLoveDagger2(): Info{
+        return Info("Love Dagger 2")
+    }
+}
+@Module
+class Bag2{
+    @Provides
+    fun sayHateDagger2(): Info2{
+        return Info2("Hate Dagger 2")
+    }
 }
 
-@Component //where the instantiating my member variable  magic happends
+class Info(val text: String)
+class Info2(val text: String)
+
+@Component (modules = [Bag::class, Bag2::class])
 interface MagicBox {
     //I also need to tell my magic box, it is there to perform it’s
     // magic on MainActivity. So to do that, I create a poke function
     // accepting MainActivity in my MagicBox.
     fun poke(app: MainActivity)//inject()
-    fun inject2(text: Itext)
 }
 
 //-----------My Implementation------------//
@@ -69,7 +79,7 @@ interface MagicBox {
 //    fun inject(app: MainActivity)
 //}
 
-class data @Inject constructor (var texto: Itext){
+/*class data @Inject constructor (var texto: Itext){
     fun getData(): String{
         return texto.show()
     }
@@ -89,4 +99,4 @@ class implementationGuille @Inject constructor(): Itext{
     override fun show(): String {
         return   "Hello Guille"
     }
-}
+}*/
