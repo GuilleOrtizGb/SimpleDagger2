@@ -46,12 +46,12 @@ class Bag{
     }
 }
 
-class Info(val text: String)
+class Info(var text: String)
 
 @Component (modules = [Bag::class])
 interface MagicBox {
     //I also need to tell my magic box, it is there to perform it’s
     // magic on MainActivity. So to do that, I create a poke function
     // accepting MainActivity in my MagicBox.
-    fun inject(app: MainActivity)//inject()
+    fun inject(app: MainActivity)//inject in this class()
 }
